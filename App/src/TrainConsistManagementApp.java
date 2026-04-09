@@ -4,72 +4,71 @@ import java.util.Scanner;
 
 public class TrainConsistManagementApp {
 
-    static class InvalidCapacityException extends Exception {
-        public InvalidCapacityException(String message) {
+    static class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
             super(message);
         }
     }
 
-    static class PassengerBogie {
-        String type;
-        int capacity;
+    static class GoodsBogie {
+        String shape;
+        String cargo;
 
-        PassengerBogie(String type, int capacity) throws InvalidCapacityException {
-            if (capacity <= 0) {
-                throw new InvalidCapacityException("Capacity must be greater than zero");
+        GoodsBogie(String shape) {
+            this.shape = shape;
+        }
+
+        void assignCargo(String cargo, List<String> logs) {
+            try {
+                if (shape.equalsIgnoreCase("Rectangular") && cargo.equalsIgnoreCase("Petroleum")) {
+                    throw new CargoSafetyException("Unsafe cargo assignment!");
+                }
+                this.cargo = cargo;
+                logs.add("Cargo assigned successfully -> " + cargo + " (for " + shape + ")");
+            } catch (CargoSafetyException e) {
+                logs.add("Error: " + e.getMessage() + " (for " + shape + ")");
+            } finally {
+                logs.add("Cargo validation completed for " + shape + " bogie");
             }
-            this.type = type;
-            this.capacity = capacity;
         }
 
         @Override
         public String toString() {
-            return type + " -> " + capacity;
+            return shape + " -> " + (cargo == null ? "No cargo" : cargo);
         }
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<PassengerBogie> bogies = new ArrayList<>();
-        List<String> errors = new ArrayList<>();
+        List<GoodsBogie> bogies = new ArrayList<>();
+        List<String> logs = new ArrayList<>();
 
         System.out.println("=======================================");
-        System.out.println(" UC14 - Handle Invalid Bogie Capacity ");
+        System.out.println(" UC15 - Safe Cargo Assignment Using try-catch-finally ");
         System.out.println("=======================================\n");
 
-        System.out.print("How many passenger bogies do you want to enter? ");
+        System.out.print("How many goods bogies do you want to enter? ");
         int count = Integer.parseInt(scanner.nextLine());
 
         for (int i = 0; i < count; i++) {
-            System.out.print("Enter bogie type (e.g., Sleeper, AC Chair, First Class): ");
-            String type = scanner.nextLine();
-            System.out.print("Enter bogie capacity (integer): ");
-            int capacity = Integer.parseInt(scanner.nextLine());
+            System.out.print("Enter bogie shape (e.g., Cylindrical, Rectangular): ");
+            String shape = scanner.nextLine();
+            GoodsBogie bogie = new GoodsBogie(shape);
 
-            try {
-                PassengerBogie bogie = new PassengerBogie(type, capacity);
-                bogies.add(bogie);
-            } catch (InvalidCapacityException e) {
-                errors.add("Error for " + type + ": " + e.getMessage());
-            }
+            System.out.print("Enter cargo to assign: ");
+            String cargo = scanner.nextLine();
+            bogie.assignCargo(cargo, logs);
+
+            bogies.add(bogie);
         }
 
-        System.out.println("\nSummary Report:");
-        System.out.println("Valid Bogies:");
-        if (bogies.isEmpty()) {
-            System.out.println("None");
-        } else {
-            bogies.forEach(System.out::println);
-        }
+        System.out.println("\nAssignment Log:");
+        logs.forEach(System.out::println);
 
-        System.out.println("\nErrors:");
-        if (errors.isEmpty()) {
-            System.out.println("None");
-        } else {
-            errors.forEach(System.out::println);
-        }
+        System.out.println("\nFinal Train Consist:");
+        bogies.forEach(System.out::println);
 
-        System.out.println("\nUC14 exception handling completed ...");
+        System.out.println("\nUC15 runtime handling completed ...");
         scanner.close();
     }
 }
