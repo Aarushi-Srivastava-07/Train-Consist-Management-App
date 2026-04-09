@@ -6,57 +6,49 @@ import java.util.List;
 public class QuantityMeasurementAppTest {
 
     @Test
-    void testLoopFilteringLogic() {
-        List<UseCase13TrainConsistMgmnt.Bogie> bogies = new ArrayList<>();
-        bogies.add(new UseCase13TrainConsistMgmnt.Bogie("Sleeper", 50));
-        bogies.add(new UseCase13TrainConsistMgmnt.Bogie("AC Chair", 80));
-        List<UseCase13TrainConsistMgmnt.Bogie> result = UseCase13TrainConsistMgmnt.filterWithLoop(bogies);
-        assertEquals(1, result.size());
-        assertEquals(80, result.get(0).capacity);
+    void testException_ValidCapacityCreation() throws UseCase14TrainConsistMgmnt.InvalidCapacityException {
+        UseCase14TrainConsistMgmnt.PassengerBogie bogie =
+                new UseCase14TrainConsistMgmnt.PassengerBogie("Sleeper", 50);
+        assertNotNull(bogie);
+        assertEquals(50, bogie.capacity);
     }
 
     @Test
-    void testStreamFilteringLogic() {
-        List<UseCase13TrainConsistMgmnt.Bogie> bogies = new ArrayList<>();
-        bogies.add(new UseCase13TrainConsistMgmnt.Bogie("Sleeper", 40));
-        bogies.add(new UseCase13TrainConsistMgmnt.Bogie("First Class", 100));
-        List<UseCase13TrainConsistMgmnt.Bogie> result = UseCase13TrainConsistMgmnt.filterWithStream(bogies);
-        assertEquals(1, result.size());
-        assertEquals(100, result.get(0).capacity);
+    void testException_NegativeCapacityThrowsException() {
+        assertThrows(UseCase14TrainConsistMgmnt.InvalidCapacityException.class, () -> {
+            new UseCase14TrainConsistMgmnt.PassengerBogie("AC Chair", -10);
+        });
     }
 
     @Test
-    void testLoopAndStreamResultsMatch() {
-        List<UseCase13TrainConsistMgmnt.Bogie> bogies = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            bogies.add(new UseCase13TrainConsistMgmnt.Bogie("Bogie-" + i, i * 10));
-        }
-        List<UseCase13TrainConsistMgmnt.Bogie> loopResult = UseCase13TrainConsistMgmnt.filterWithLoop(bogies);
-        List<UseCase13TrainConsistMgmnt.Bogie> streamResult = UseCase13TrainConsistMgmnt.filterWithStream(bogies);
-        assertEquals(loopResult.size(), streamResult.size());
+    void testException_ZeroCapacityThrowsException() {
+        assertThrows(UseCase14TrainConsistMgmnt.InvalidCapacityException.class, () -> {
+            new UseCase14TrainConsistMgmnt.PassengerBogie("First Class", 0);
+        });
     }
 
     @Test
-    void testExecutionTimeMeasurement() {
-        List<UseCase13TrainConsistMgmnt.Bogie> bogies = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            bogies.add(new UseCase13TrainConsistMgmnt.Bogie("Bogie-" + i, i % 100));
-        }
-        long start = System.nanoTime();
-        UseCase13TrainConsistMgmnt.filterWithLoop(bogies);
-        long end = System.nanoTime();
-        long elapsed = end - start;
-        assertTrue(elapsed > 0);
+    void testException_ExceptionMessageValidation() {
+        Exception ex = assertThrows(UseCase14TrainConsistMgmnt.InvalidCapacityException.class, () -> {
+            new UseCase14TrainConsistMgmnt.PassengerBogie("Sleeper", 0);
+        });
+        assertEquals("Capacity must be greater than zero", ex.getMessage());
     }
 
     @Test
-    void testLargeDatasetProcessing() {
-        List<UseCase13TrainConsistMgmnt.Bogie> bogies = new ArrayList<>();
-        for (int i = 0; i < 100000; i++) {
-            bogies.add(new UseCase13TrainConsistMgmnt.Bogie("Bogie-" + i, (i % 100) + 1));
-        }
-        List<UseCase13TrainConsistMgmnt.Bogie> loopResult = UseCase13TrainConsistMgmnt.filterWithLoop(bogies);
-        List<UseCase13TrainConsistMgmnt.Bogie> streamResult = UseCase13TrainConsistMgmnt.filterWithStream(bogies);
-        assertEquals(loopResult.size(), streamResult.size());
+    void testException_ObjectIntegrityAfterCreation() throws UseCase14TrainConsistMgmnt.InvalidCapacityException {
+        UseCase14TrainConsistMgmnt.PassengerBogie bogie =
+                new UseCase14TrainConsistMgmnt.PassengerBogie("Sleeper", 72);
+        assertEquals("Sleeper", bogie.type);
+        assertEquals(72, bogie.capacity);
+    }
+
+    @Test
+    void testException_MultipleValidBogiesCreation() throws UseCase14TrainConsistMgmnt.InvalidCapacityException {
+        List<UseCase14TrainConsistMgmnt.PassengerBogie> bogies = new ArrayList<>();
+        bogies.add(new UseCase14TrainConsistMgmnt.PassengerBogie("Sleeper", 72));
+        bogies.add(new UseCase14TrainConsistMgmnt.PassengerBogie("AC Chair", 80));
+        bogies.add(new UseCase14TrainConsistMgmnt.PassengerBogie("First Class", 100));
+        assertEquals(3, bogies.size());
     }
 }
