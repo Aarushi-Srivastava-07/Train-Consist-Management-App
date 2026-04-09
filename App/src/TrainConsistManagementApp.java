@@ -1,65 +1,53 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
+/**
+ * MAIN CLASS - UseCase11TrainConsistMgmnt
+ * Use Case 11: Validate Train ID and Cargo Code
+ *
+ * Description:
+ * This class validates input formats using Regular Expressions.
+ *
+ * @author Developer
+ * @version 11.0
+ */
 public class TrainConsistManagementApp {
 
-    static class Bogie {
-        String name;
-        int capacity;
-        Bogie(String name, int capacity) {
-            this.name = name;
-            this.capacity = capacity;
-        }
-        public String toString() {
-            return name + " -> " + capacity;
-        }
+    private static final String TRAIN_ID_REGEX = "^TRN-\\d{4}$";
+    private static final String CARGO_CODE_REGEX = "^PET-[A-Z]{2}$";
+
+    public static boolean validateTrainId(String trainId) {
+        Pattern pattern = Pattern.compile(TRAIN_ID_REGEX);
+        Matcher matcher = pattern.matcher(trainId);
+        return matcher.matches();
     }
 
-    private static int countTotalSeats(List<Bogie> bogies) {
-        return bogies.stream().map(b -> b.capacity).reduce(0, Integer::sum);
+    public static boolean validateCargoCode(String cargoCode) {
+        Pattern pattern = Pattern.compile(CARGO_CODE_REGEX);
+        Matcher matcher = pattern.matcher(cargoCode);
+        return matcher.matches();
     }
 
     public static void main(String[] args) {
-        System.out.println("UC10 - Count Total Seats in Train\n");
+        Scanner scanner = new Scanner(System.in);
 
-        List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 70));
+        System.out.println("UC11 - Validate Train ID and Cargo Code");
 
-        System.out.println("Bogies in Train:");
-        bogies.forEach(System.out::println);
+        System.out.print("Enter Train ID (Format: TRN-1234): ");
+        String trainId = scanner.nextLine();
 
-        int totalSeats = countTotalSeats(bogies);
-        System.out.println("\nTotal Seating Capacity of Train: " + totalSeats);
+        System.out.print("Enter Cargo Code (Format: PET-AB): ");
+        String cargoCode = scanner.nextLine();
 
-        System.out.println("\nUC10 aggregation completed ...");
+        boolean isTrainIdValid = validateTrainId(trainId);
+        boolean isCargoCodeValid = validateCargoCode(cargoCode);
 
-        System.out.println("\n--- Test Cases ---");
+        System.out.println("\nValidation Results:");
+        System.out.println("Train ID Valid: " + isTrainIdValid);
+        System.out.println("Cargo Code Valid: " + isCargoCodeValid);
 
-        List<Bogie> test1 = Arrays.asList(new Bogie("Sleeper", 72), new Bogie("AC Chair", 56));
-        System.out.println("testReduce_TotalSeatCalculation: " + countTotalSeats(test1));
-
-        List<Bogie> test2 = Arrays.asList(new Bogie("Sleeper", 72), new Bogie("AC Chair", 56), new Bogie("First Class", 24));
-        System.out.println("testReduce_MultipleBogiesAggregation: " + countTotalSeats(test2));
-
-        List<Bogie> test3 = Arrays.asList(new Bogie("Sleeper", 72));
-        System.out.println("testReduce_SingleBogieCapacity: " + countTotalSeats(test3));
-
-        List<Bogie> test4 = new ArrayList<>();
-        System.out.println("testReduce_EmptyBogieList: " + countTotalSeats(test4));
-
-        List<Bogie> test5 = Arrays.asList(new Bogie("Sleeper", 72), new Bogie("AC Chair", 56));
-        System.out.println("testReduce_CorrectCapacityExtraction: " + test5.stream().map(b -> b.capacity).collect(Collectors.toList()));
-
-        List<Bogie> test6 = Arrays.asList(new Bogie("Sleeper", 72), new Bogie("AC Chair", 56), new Bogie("First Class", 24));
-        System.out.println("testReduce_AllBogiesIncluded: " + countTotalSeats(test6));
-
-        List<Bogie> test7 = new ArrayList<>();
-        test7.add(new Bogie("Sleeper", 72));
-        test7.add(new Bogie("AC Chair", 56));
-        countTotalSeats(test7);
-        System.out.println("testReduce_OriginalListUnchanged: " + test7.size() + " bogies remain");
+        System.out.println("\nUC11 validation completed ...");
+        scanner.close();
     }
 }
