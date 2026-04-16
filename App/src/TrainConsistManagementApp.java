@@ -1,85 +1,68 @@
-import java.util.Arrays;
-
 /**
  * MAIN CLASS - TrainConsistManagementApp
- * Use Case 19: Binary Search for Bogie ID
+ * Use Case 20: Defensive Programming - Throw Exception on Empty Train Consist
  * * Description:
- * This class demonstrates searching for a specific bogie ID
- * efficiently using the Binary Search algorithm on sorted data.
+ * This class demonstrates checking for invalid states before 
+ * performing operations. If the train consist (array) is empty, 
+ * it throws an IllegalStateException immediately (Fail-Fast).
  *
  * At this stage, the application:
- * - Creates a sorted array of bogie IDs
- * - Accepts a search key
- * - Implements a divide-and-conquer strategy
- * - Uses compareTo() for string comparison
- * - Halves the search range until the target is found or exhausted
- * - Displays the search result
+ * - Checks if the array is null or empty
+ * - Throws IllegalStateException if no bogies exist
+ * - Halts the search operation explicitly and safely
  *
  * @author Developer
- * @version 19.0
+ * @version 20.0
  */
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=========================================");
-        System.out.println(" UC19 - Binary Search for Bogie ID ");
-        System.out.println("=========================================\n");
+        System.out.println("=================================================");
+        System.out.println(" UC20 - Defensive Search (Empty Train Handling) ");
+        System.out.println("=================================================\n");
 
-        // Create a PRE-SORTED array of bogie IDs (Binary search requires sorted data)
-        String[] sortedBogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-
-        // Bogie ID to search
+        // Scenario 1: Searching an empty train consist
+        String[] emptyBogieIds = {};
         String searchId = "BG412";
 
-        // Display all bogies
-        System.out.println("Available Sorted Bogie IDs:");
-        System.out.println(Arrays.toString(sortedBogieIds) + "\n");
-
-        // ---- BINARY SEARCH LOGIC ----
-        boolean found = binarySearch(sortedBogieIds, searchId);
-
-        // Display result
-        if (found) {
-            System.out.println("Bogie " + searchId + " found in train consist.\n");
-        } else {
-            System.out.println("Bogie " + searchId + " not found in train consist.\n");
+        System.out.println("Scenario: Triggering search on an empty train consist...");
+        
+        try {
+            // ---- DEFENSIVE PROGRAMMING LOGIC ----
+            // This will throw an exception and jump straight to the catch block
+            boolean found = searchBogieDefensively(emptyBogieIds, searchId);
+            
+            System.out.println("Result: " + found); // This line won't execute
+        } catch (IllegalStateException e) {
+            System.out.println("\n[ERROR CAUGHT] Operation Stopped Immediately.");
+            System.out.println("Meaningful User Message: " + e.getMessage() + "\n");
         }
 
-        System.out.println("UC19 search completed ...");
+        System.out.println("UC20 defensive programming demonstration completed ...");
     }
 
     /**
-     * Performs a binary search to find a specific bogie ID in a sorted array.
+     * Searches for a bogie ID, but enforces a defensive Fail-Fast check first.
      * Separated into its own method to allow for standalone testing.
-     * * @param arr The sorted array of bogie IDs to search through.
+     * * @param arr The array of bogie IDs to search through.
      * @param target The bogie ID to find.
      * @return true if the ID is found, false otherwise.
+     * @throws IllegalStateException if the array is empty or null.
      */
-    public static boolean binarySearch(String[] arr, String target) {
-        int low = 0;
-        int high = arr.length - 1;
+    public static boolean searchBogieDefensively(String[] arr, String target) {
+        // 1. STATE VALIDATION (Defensive Programming)
+        if (arr == null || arr.length == 0) {
+            throw new IllegalStateException("Cannot perform search: No bogies exist in the train consist.");
+        }
 
-        while (low <= high) {
-            // Find the middle index safely to avoid integer overflow
-            int mid = low + (high - low) / 2;
-
-            // Compare key with mid element
-            int comparisonResult = target.compareTo(arr[mid]);
-
-            if (comparisonResult == 0) {
-                return true; // Target found at mid
-            } 
-            else if (comparisonResult > 0) {
-                // Target is lexicographically greater, ignore left half
-                low = mid + 1;
-            } 
-            else {
-                // Target is lexicographically smaller, ignore right half
-                high = mid - 1;
+        // 2. SEARCH LOGIC (Only executes if validation passes)
+        for (String id : arr) {
+            if (id.equals(target)) {
+                return true;
             }
         }
         
-        return false; // Range exhausted, target not found
+        return false;
     }
 }
