@@ -1,73 +1,73 @@
 import java.util.Arrays;
 
 /**
- * Custom Test Runner for TrainConsistManagementApp Bubble Sort logic.
- * This file replaces JUnit to run without any external dependencies.
+ * Custom Test Runner for TrainConsistManagementApp Arrays.sort() logic.
+ * This file runs without any external dependencies like JUnit.
  */
 public class QuantityMeasurementAppTest {
 
     public static void main(String[] args) {
         System.out.println("=========================================");
-        System.out.println(" Running Bubble Sort Test Cases ");
+        System.out.println(" Running Arrays.sort() Test Cases ");
         System.out.println("=========================================\n");
 
-        testSort_BasicSorting();
+        testSort_BasicAlphabeticalSorting();
+        testSort_UnsortedInput();
         testSort_AlreadySortedArray();
-        testSort_DuplicateValues();
+        testSort_DuplicateBogieNames();
         testSort_SingleElementArray();
-        testSort_AllEqualValues();
 
         System.out.println("\nAll tests execution finished.");
     }
 
     // --- TEST CASES ---
 
-    static void testSort_BasicSorting() {
-        int[] capacities = {72, 56, 24, 70, 60};
-        int[] expected = {24, 56, 60, 70, 72};
+    static void testSort_BasicAlphabeticalSorting() {
+        String[] bogies = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+        String[] expected = {"AC Chair", "First Class", "General", "Luxury", "Sleeper"};
         
-        TrainConsistManagementApp.bubbleSort(capacities);
-        checkAndPrintResult("testSort_BasicSorting", expected, capacities);
+        TrainConsistManagementApp.sortBogies(bogies);
+        checkAndPrintResult("testSort_BasicAlphabeticalSorting", expected, bogies);
+    }
+
+    static void testSort_UnsortedInput() {
+        String[] bogies = {"Luxury", "General", "Sleeper", "AC Chair"};
+        String[] expected = {"AC Chair", "General", "Luxury", "Sleeper"};
+        
+        TrainConsistManagementApp.sortBogies(bogies);
+        checkAndPrintResult("testSort_UnsortedInput", expected, bogies);
     }
 
     static void testSort_AlreadySortedArray() {
-        int[] capacities = {24, 56, 60, 70, 72};
-        int[] expected = {24, 56, 60, 70, 72};
+        String[] bogies = {"AC Chair", "First Class", "General"};
+        String[] expected = {"AC Chair", "First Class", "General"};
         
-        TrainConsistManagementApp.bubbleSort(capacities);
-        checkAndPrintResult("testSort_AlreadySortedArray", expected, capacities);
+        TrainConsistManagementApp.sortBogies(bogies);
+        checkAndPrintResult("testSort_AlreadySortedArray", expected, bogies);
     }
 
-    static void testSort_DuplicateValues() {
-        int[] capacities = {72, 56, 56, 24};
-        int[] expected = {24, 56, 56, 72};
+    static void testSort_DuplicateBogieNames() {
+        String[] bogies = {"Sleeper", "AC Chair", "Sleeper", "General"};
+        String[] expected = {"AC Chair", "General", "Sleeper", "Sleeper"};
         
-        TrainConsistManagementApp.bubbleSort(capacities);
-        checkAndPrintResult("testSort_DuplicateValues", expected, capacities);
+        TrainConsistManagementApp.sortBogies(bogies);
+        checkAndPrintResult("testSort_DuplicateBogieNames", expected, bogies);
     }
 
     static void testSort_SingleElementArray() {
-        int[] capacities = {50};
-        int[] expected = {50};
+        String[] bogies = {"Sleeper"};
+        String[] expected = {"Sleeper"};
         
-        TrainConsistManagementApp.bubbleSort(capacities);
-        checkAndPrintResult("testSort_SingleElementArray", expected, capacities);
-    }
-
-    static void testSort_AllEqualValues() {
-        int[] capacities = {40, 40, 40};
-        int[] expected = {40, 40, 40};
-        
-        TrainConsistManagementApp.bubbleSort(capacities);
-        checkAndPrintResult("testSort_AllEqualValues", expected, capacities);
+        TrainConsistManagementApp.sortBogies(bogies);
+        checkAndPrintResult("testSort_SingleElementArray", expected, bogies);
     }
 
     // --- HELPER METHOD TO VERIFY RESULTS ---
 
     /**
-     * Compares the expected array with the actual sorted array and prints the result.
+     * Compares the expected string array with the actual sorted string array and prints the result.
      */
-    static void checkAndPrintResult(String testName, int[] expected, int[] actual) {
+    static void checkAndPrintResult(String testName, String[] expected, String[] actual) {
         if (Arrays.equals(expected, actual)) {
             System.out.println("✅ PASS: " + testName);
         } else {
