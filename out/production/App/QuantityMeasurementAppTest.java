@@ -1,12 +1,14 @@
+import java.util.Arrays;
+
 /**
- * Custom Test Runner for TrainConsistManagementApp Linear Search logic.
+ * Custom Test Runner for TrainConsistManagementApp Binary Search logic.
  * This file runs without any external dependencies like JUnit.
  */
 public class QuantityMeasurementAppTest {
 
     public static void main(String[] args) {
         System.out.println("=========================================");
-        System.out.println(" Running Linear Search Test Cases ");
+        System.out.println(" Running Binary Search Test Cases ");
         System.out.println("=========================================\n");
 
         testSearch_BogieFound();
@@ -22,31 +24,31 @@ public class QuantityMeasurementAppTest {
 
     static void testSearch_BogieFound() {
         String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG309");
+        boolean result = TrainConsistManagementApp.binarySearch(bogieIds, "BG309");
         checkAndPrintResult("testSearch_BogieFound", true, result);
     }
 
     static void testSearch_BogieNotFound() {
         String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG999");
+        boolean result = TrainConsistManagementApp.binarySearch(bogieIds, "BG999");
         checkAndPrintResult("testSearch_BogieNotFound", false, result);
     }
 
     static void testSearch_FirstElementMatch() {
         String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG101");
+        boolean result = TrainConsistManagementApp.binarySearch(bogieIds, "BG101");
         checkAndPrintResult("testSearch_FirstElementMatch", true, result);
     }
 
     static void testSearch_LastElementMatch() {
         String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG550");
+        boolean result = TrainConsistManagementApp.binarySearch(bogieIds, "BG550");
         checkAndPrintResult("testSearch_LastElementMatch", true, result);
     }
 
     static void testSearch_SingleElementArray() {
         String[] bogieIds = {"BG101"};
-        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG101");
+        boolean result = TrainConsistManagementApp.binarySearch(bogieIds, "BG101");
         checkAndPrintResult("testSearch_SingleElementArray", true, result);
     }
 
