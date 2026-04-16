@@ -1,79 +1,67 @@
-import java.util.Arrays;
-
 /**
- * Custom Test Runner for TrainConsistManagementApp Arrays.sort() logic.
+ * Custom Test Runner for TrainConsistManagementApp Linear Search logic.
  * This file runs without any external dependencies like JUnit.
  */
 public class QuantityMeasurementAppTest {
 
     public static void main(String[] args) {
         System.out.println("=========================================");
-        System.out.println(" Running Arrays.sort() Test Cases ");
+        System.out.println(" Running Linear Search Test Cases ");
         System.out.println("=========================================\n");
 
-        testSort_BasicAlphabeticalSorting();
-        testSort_UnsortedInput();
-        testSort_AlreadySortedArray();
-        testSort_DuplicateBogieNames();
-        testSort_SingleElementArray();
+        testSearch_BogieFound();
+        testSearch_BogieNotFound();
+        testSearch_FirstElementMatch();
+        testSearch_LastElementMatch();
+        testSearch_SingleElementArray();
 
         System.out.println("\nAll tests execution finished.");
     }
 
     // --- TEST CASES ---
 
-    static void testSort_BasicAlphabeticalSorting() {
-        String[] bogies = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
-        String[] expected = {"AC Chair", "First Class", "General", "Luxury", "Sleeper"};
-        
-        TrainConsistManagementApp.sortBogies(bogies);
-        checkAndPrintResult("testSort_BasicAlphabeticalSorting", expected, bogies);
+    static void testSearch_BogieFound() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG309");
+        checkAndPrintResult("testSearch_BogieFound", true, result);
     }
 
-    static void testSort_UnsortedInput() {
-        String[] bogies = {"Luxury", "General", "Sleeper", "AC Chair"};
-        String[] expected = {"AC Chair", "General", "Luxury", "Sleeper"};
-        
-        TrainConsistManagementApp.sortBogies(bogies);
-        checkAndPrintResult("testSort_UnsortedInput", expected, bogies);
+    static void testSearch_BogieNotFound() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG999");
+        checkAndPrintResult("testSearch_BogieNotFound", false, result);
     }
 
-    static void testSort_AlreadySortedArray() {
-        String[] bogies = {"AC Chair", "First Class", "General"};
-        String[] expected = {"AC Chair", "First Class", "General"};
-        
-        TrainConsistManagementApp.sortBogies(bogies);
-        checkAndPrintResult("testSort_AlreadySortedArray", expected, bogies);
+    static void testSearch_FirstElementMatch() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG101");
+        checkAndPrintResult("testSearch_FirstElementMatch", true, result);
     }
 
-    static void testSort_DuplicateBogieNames() {
-        String[] bogies = {"Sleeper", "AC Chair", "Sleeper", "General"};
-        String[] expected = {"AC Chair", "General", "Sleeper", "Sleeper"};
-        
-        TrainConsistManagementApp.sortBogies(bogies);
-        checkAndPrintResult("testSort_DuplicateBogieNames", expected, bogies);
+    static void testSearch_LastElementMatch() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG550");
+        checkAndPrintResult("testSearch_LastElementMatch", true, result);
     }
 
-    static void testSort_SingleElementArray() {
-        String[] bogies = {"Sleeper"};
-        String[] expected = {"Sleeper"};
-        
-        TrainConsistManagementApp.sortBogies(bogies);
-        checkAndPrintResult("testSort_SingleElementArray", expected, bogies);
+    static void testSearch_SingleElementArray() {
+        String[] bogieIds = {"BG101"};
+        boolean result = TrainConsistManagementApp.linearSearch(bogieIds, "BG101");
+        checkAndPrintResult("testSearch_SingleElementArray", true, result);
     }
 
     // --- HELPER METHOD TO VERIFY RESULTS ---
 
     /**
-     * Compares the expected string array with the actual sorted string array and prints the result.
+     * Compares the expected boolean result with the actual result and prints the status.
      */
-    static void checkAndPrintResult(String testName, String[] expected, String[] actual) {
-        if (Arrays.equals(expected, actual)) {
-            System.out.println("✅ PASS: " + testName);
+    static void checkAndPrintResult(String testName, boolean expected, boolean actual) {
+        if (expected == actual) {
+            System.out.println(" PASS: " + testName);
         } else {
-            System.out.println("❌ FAIL: " + testName);
-            System.out.println("   Expected: " + Arrays.toString(expected));
-            System.out.println("   Actual:   " + Arrays.toString(actual));
+            System.out.println(" FAIL: " + testName);
+            System.out.println("   Expected: " + expected);
+            System.out.println("   Actual:   " + actual);
         }
     }
 }
