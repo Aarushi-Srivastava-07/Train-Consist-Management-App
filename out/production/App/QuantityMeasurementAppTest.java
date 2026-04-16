@@ -1,52 +1,79 @@
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 
-public class QuantityManagementAppTest {
+/**
+ * Custom Test Runner for TrainConsistManagementApp Bubble Sort logic.
+ * This file replaces JUnit to run without any external dependencies.
+ */
+public class QuantityMeasurementAppTest {
 
-    @Test
-    void testCargo_SafeAssignment() {
-        UseCase15TrainConsistMgmnt.GoodsBogie bogie =
-                new UseCase15TrainConsistMgmnt.GoodsBogie("Cylindrical");
-        bogie.assignCargo("Petroleum");
-        assertEquals("Petroleum", bogie.cargo, "Safe cargo should be assigned successfully");
+    public static void main(String[] args) {
+        System.out.println("=========================================");
+        System.out.println(" Running Bubble Sort Test Cases ");
+        System.out.println("=========================================\n");
+
+        testSort_BasicSorting();
+        testSort_AlreadySortedArray();
+        testSort_DuplicateValues();
+        testSort_SingleElementArray();
+        testSort_AllEqualValues();
+
+        System.out.println("\nAll tests execution finished.");
     }
 
-    @Test
-    void testCargo_UnsafeAssignmentHandled() {
-        UseCase15TrainConsistMgmnt.GoodsBogie bogie =
-                new UseCase15TrainConsistMgmnt.GoodsBogie("Rectangular");
-        bogie.assignCargo("Petroleum");
-        assertNull(bogie.cargo, "Unsafe cargo should not be assigned");
+    // --- TEST CASES ---
+
+    static void testSort_BasicSorting() {
+        int[] capacities = {72, 56, 24, 70, 60};
+        int[] expected = {24, 56, 60, 70, 72};
+        
+        TrainConsistManagementApp.bubbleSort(capacities);
+        checkAndPrintResult("testSort_BasicSorting", expected, capacities);
     }
 
-    @Test
-    void testCargo_CargoNotAssignedAfterFailure() {
-        UseCase15TrainConsistMgmnt.GoodsBogie bogie =
-                new UseCase15TrainConsistMgmnt.GoodsBogie("Rectangular");
-        bogie.assignCargo("Petroleum");
-        assertNull(bogie.cargo, "Cargo must remain null after unsafe assignment");
+    static void testSort_AlreadySortedArray() {
+        int[] capacities = {24, 56, 60, 70, 72};
+        int[] expected = {24, 56, 60, 70, 72};
+        
+        TrainConsistManagementApp.bubbleSort(capacities);
+        checkAndPrintResult("testSort_AlreadySortedArray", expected, capacities);
     }
 
-    @Test
-    void testCargo_ProgramContinuesAfterException() {
-        UseCase15TrainConsistMgmnt.GoodsBogie b1 =
-                new UseCase15TrainConsistMgmnt.GoodsBogie("Cylindrical");
-        UseCase15TrainConsistMgmnt.GoodsBogie b2 =
-                new UseCase15TrainConsistMgmnt.GoodsBogie("Rectangular");
-
-        b1.assignCargo("Petroleum");   // safe
-        b2.assignCargo("Petroleum");   // unsafe
-
-        assertEquals("Petroleum", b1.cargo, "Safe cargo should be assigned");
-        assertNull(b2.cargo, "Unsafe cargo should not be assigned");
+    static void testSort_DuplicateValues() {
+        int[] capacities = {72, 56, 56, 24};
+        int[] expected = {24, 56, 56, 72};
+        
+        TrainConsistManagementApp.bubbleSort(capacities);
+        checkAndPrintResult("testSort_DuplicateValues", expected, capacities);
     }
 
-    @Test
-    void testCargo_FinallyBlockExecution() {
-        UseCase15TrainConsistMgmnt.GoodsBogie bogie =
-                new UseCase15TrainConsistMgmnt.GoodsBogie("Rectangular");
+    static void testSort_SingleElementArray() {
+        int[] capacities = {50};
+        int[] expected = {50};
+        
+        TrainConsistManagementApp.bubbleSort(capacities);
+        checkAndPrintResult("testSort_SingleElementArray", expected, capacities);
+    }
 
-        bogie.assignCargo("Petroleum");
-        assertNull(bogie.cargo, "Cargo remains null after unsafe assignment");
+    static void testSort_AllEqualValues() {
+        int[] capacities = {40, 40, 40};
+        int[] expected = {40, 40, 40};
+        
+        TrainConsistManagementApp.bubbleSort(capacities);
+        checkAndPrintResult("testSort_AllEqualValues", expected, capacities);
+    }
+
+    // --- HELPER METHOD TO VERIFY RESULTS ---
+
+    /**
+     * Compares the expected array with the actual sorted array and prints the result.
+     */
+    static void checkAndPrintResult(String testName, int[] expected, int[] actual) {
+        if (Arrays.equals(expected, actual)) {
+            System.out.println("✅ PASS: " + testName);
+        } else {
+            System.out.println("❌ FAIL: " + testName);
+            System.out.println("   Expected: " + Arrays.toString(expected));
+            System.out.println("   Actual:   " + Arrays.toString(actual));
+        }
     }
 }

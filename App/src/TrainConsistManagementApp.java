@@ -1,74 +1,67 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+/**
+ * MAIN CLASS - TrainConsistManagementApp
+ * * Use Case 16: Sort Passenger Bogies by Capacity
+ * Description:
+ * This class demonstrates manual sorting of passenger
+ * bogie capacities using the Bubble Sort algorithm
+ * instead of built-in sorting utilities.
+ * * At this stage, the application:
+ * - Creates an array of capacities
+ * - Compares adjacent values
+ * - Swaps values when required
+ * - Repeats passes until sorted
+ * - Displays sorted result
+ * * This maps algorithmic sorting logic using Bubble Sort.
+ * * @author Developer
+ * @version 16.0
+ */
 public class TrainConsistManagementApp {
 
-    static class CargoSafetyException extends RuntimeException {
-        public CargoSafetyException(String message) {
-            super(message);
+    public static void main(String[] args) {
+
+        System.out.println("=========================================");
+        System.out.println(" UC16 - Manual Sorting using Bubble Sort ");
+        System.out.println("=========================================\n");
+
+        // Create array of passenger bogie capacities
+        int[] capacities = {72, 56, 24, 70, 60};
+
+        // Display original order
+        System.out.println("Original Capacities:");
+        for (int c : capacities) {
+            System.out.print(c + " ");
         }
+
+        // ---- BUBBLE SORT LOGIC ----
+        bubbleSort(capacities);
+
+        // Display sorted result
+        System.out.println("\n\nSorted Capacities (Ascending):");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
+        
+        System.out.println("\n\nUC16 sorting completed ...");
     }
 
-    static class GoodsBogie {
-        String shape;
-        String cargo;
-
-        GoodsBogie(String shape) {
-            this.shape = shape;
-        }
-
-        void assignCargo(String cargo, List<String> logs) {
-            try {
-                if (shape.equalsIgnoreCase("Rectangular") && cargo.equalsIgnoreCase("Petroleum")) {
-                    throw new CargoSafetyException("Unsafe cargo assignment!");
+    /**
+     * Sorts an array of integers in ascending order using Bubble Sort.
+     * Separated into its own method to allow for unit testing.
+     * * @param arr The array of capacities to sort.
+     */
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        // Outer Loop controls number of passes
+        for (int i = 0; i < n - 1; i++) {
+            // Inner Loop compares adjacent values
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap values if they are out of order
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
-                this.cargo = cargo;
-                logs.add("Cargo assigned successfully -> " + cargo + " (for " + shape + ")");
-            } catch (CargoSafetyException e) {
-                logs.add("Error: " + e.getMessage() + " (for " + shape + ")");
-            } finally {
-                logs.add("Cargo validation completed for " + shape + " bogie");
             }
         }
-
-        @Override
-        public String toString() {
-            return shape + " -> " + (cargo == null ? "No cargo" : cargo);
-        }
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        List<GoodsBogie> bogies = new ArrayList<>();
-        List<String> logs = new ArrayList<>();
-
-        System.out.println("=======================================");
-        System.out.println(" UC15 - Safe Cargo Assignment Using try-catch-finally ");
-        System.out.println("=======================================\n");
-
-        System.out.print("How many goods bogies do you want to enter? ");
-        int count = Integer.parseInt(scanner.nextLine());
-
-        for (int i = 0; i < count; i++) {
-            System.out.print("Enter bogie shape (e.g., Cylindrical, Rectangular): ");
-            String shape = scanner.nextLine();
-            GoodsBogie bogie = new GoodsBogie(shape);
-
-            System.out.print("Enter cargo to assign: ");
-            String cargo = scanner.nextLine();
-            bogie.assignCargo(cargo, logs);
-
-            bogies.add(bogie);
-        }
-
-        System.out.println("\nAssignment Log:");
-        logs.forEach(System.out::println);
-
-        System.out.println("\nFinal Train Consist:");
-        bogies.forEach(System.out::println);
-
-        System.out.println("\nUC15 runtime handling completed ...");
-        scanner.close();
     }
 }
