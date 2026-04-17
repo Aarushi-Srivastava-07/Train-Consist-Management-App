@@ -25,24 +25,18 @@ public class TrainConsistManagementApp {
         System.out.println(" UC18 - Linear Search for Bogie ID ");
         System.out.println("=========================================\n");
 
-        // Create array of bogie IDs
         String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-
-        // Bogie ID to search
         String searchId = "BG309";
 
-        // Display all bogies
         System.out.println("Available Bogie IDs:");
         for (String id : bogieIds) {
             System.out.println(id);
         }
 
-        System.out.println(); // Formatting space
+        System.out.println(); 
 
-        // ---- LINEAR SEARCH LOGIC ----
         boolean found = linearSearch(bogieIds, searchId);
 
-        // Display result
         if (found) {
             System.out.println("Bogie " + searchId + " found in train consist.\n");
         } else {
@@ -60,10 +54,9 @@ public class TrainConsistManagementApp {
      * @return true if the ID is found, false otherwise.
      */
     public static boolean linearSearch(String[] arr, String target) {
-        // Traverse each element sequentially
         for (String id : arr) {
             if (id.equals(target)) {
-                return true; // Stop searching immediately once a match is found
+                return true; 
             }
         }
         return false;
