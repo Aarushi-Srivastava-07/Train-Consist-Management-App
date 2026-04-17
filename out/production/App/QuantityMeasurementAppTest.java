@@ -20,7 +20,6 @@ public class QuantityMeasurementAppTest {
         System.out.println("\nAll tests execution finished.");
     }
 
-    // --- TEST CASES ---
 
     static void testSort_BasicSorting() {
         int[] capacities = {72, 56, 24, 70, 60};
@@ -62,11 +61,7 @@ public class QuantityMeasurementAppTest {
         checkAndPrintResult("testSort_AllEqualValues", expected, capacities);
     }
 
-    // --- HELPER METHOD TO VERIFY RESULTS ---
 
-    /**
-     * Compares the expected array with the actual sorted array and prints the result.
-     */
     static void checkAndPrintResult(String testName, int[] expected, int[] actual) {
         if (Arrays.equals(expected, actual)) {
             System.out.println(" PASS: " + testName);
