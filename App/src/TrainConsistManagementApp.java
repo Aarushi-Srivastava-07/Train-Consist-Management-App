@@ -29,8 +29,6 @@ public class TrainConsistManagementApp {
         System.out.println("Scenario: Triggering search on an empty train consist...");
         
         try {
-            // ---- DEFENSIVE PROGRAMMING LOGIC ----
-            // This will throw an exception and jump straight to the catch block
             boolean found = searchBogieDefensively(emptyBogieIds, searchId);
             
             System.out.println("Result: " + found); // This line won't execute
@@ -51,12 +49,10 @@ public class TrainConsistManagementApp {
      * @throws IllegalStateException if the array is empty or null.
      */
     public static boolean searchBogieDefensively(String[] arr, String target) {
-        // 1. STATE VALIDATION (Defensive Programming)
         if (arr == null || arr.length == 0) {
             throw new IllegalStateException("Cannot perform search: No bogies exist in the train consist.");
         }
 
-        // 2. SEARCH LOGIC (Only executes if validation passes)
         for (String id : arr) {
             if (id.equals(target)) {
                 return true;
