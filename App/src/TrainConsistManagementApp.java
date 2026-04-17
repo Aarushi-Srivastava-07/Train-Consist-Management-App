@@ -23,19 +23,15 @@ public class TrainConsistManagementApp {
         System.out.println(" UC16 - Manual Sorting using Bubble Sort ");
         System.out.println("=========================================\n");
 
-        // Create array of passenger bogie capacities
         int[] capacities = {72, 56, 24, 70, 60};
 
-        // Display original order
         System.out.println("Original Capacities:");
         for (int c : capacities) {
             System.out.print(c + " ");
         }
 
-        // ---- BUBBLE SORT LOGIC ----
         bubbleSort(capacities);
 
-        // Display sorted result
         System.out.println("\n\nSorted Capacities (Ascending):");
         for (int c : capacities) {
             System.out.print(c + " ");
@@ -51,12 +47,9 @@ public class TrainConsistManagementApp {
      */
     public static void bubbleSort(int[] arr) {
         int n = arr.length;
-        // Outer Loop controls number of passes
         for (int i = 0; i < n - 1; i++) {
-            // Inner Loop compares adjacent values
             for (int j = 0; j < n - 1 - i; j++) {
                 if (arr[j] > arr[j + 1]) {
-                    // Swap values if they are out of order
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
