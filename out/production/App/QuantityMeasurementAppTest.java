@@ -20,8 +20,6 @@ public class QuantityMeasurementAppTest {
         System.out.println("\nAll tests execution finished.");
     }
 
-    // --- TEST CASES ---
-
     static void testSearch_BogieFound() {
         String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
         boolean result = TrainConsistManagementApp.binarySearch(bogieIds, "BG309");
@@ -52,9 +50,8 @@ public class QuantityMeasurementAppTest {
         checkAndPrintResult("testSearch_SingleElementArray", true, result);
     }
 
-    // --- HELPER METHOD TO VERIFY RESULTS ---
 
-    /**
+    
      * Compares the expected boolean result with the actual result and prints the status.
      */
     static void checkAndPrintResult(String testName, boolean expected, boolean actual) {
