@@ -23,17 +23,13 @@ public class TrainConsistManagementApp {
         System.out.println(" UC17 - Sort Bogie Names Using Arrays.sort() ");
         System.out.println("===============================================\n");
 
-        // Create an array of bogie type names
         String[] bogies = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
 
-        // Display original order
         System.out.println("Original Bogie Names:");
         System.out.println(Arrays.toString(bogies) + "\n");
 
-        // ---- BUILT-IN SORT LOGIC ----
         sortBogies(bogies);
 
-        // Display sorted result
         System.out.println("Sorted Bogie Names (Alphabetical):");
         System.out.println(Arrays.toString(bogies) + "\n");
         
