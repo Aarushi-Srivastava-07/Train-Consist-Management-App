@@ -69,9 +69,9 @@ public class QuantityMeasurementAppTest {
      */
     static void checkAndPrintResult(String testName, String[] expected, String[] actual) {
         if (Arrays.equals(expected, actual)) {
-            System.out.println("✅ PASS: " + testName);
+            System.out.println(" PASS: " + testName);
         } else {
-            System.out.println("❌ FAIL: " + testName);
+            System.out.println(" FAIL: " + testName);
             System.out.println("   Expected: " + Arrays.toString(expected));
             System.out.println("   Actual:   " + Arrays.toString(actual));
         }
