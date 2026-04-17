@@ -26,20 +26,14 @@ public class TrainConsistManagementApp {
         System.out.println(" UC19 - Binary Search for Bogie ID ");
         System.out.println("=========================================\n");
 
-        // Create a PRE-SORTED array of bogie IDs (Binary search requires sorted data)
         String[] sortedBogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-        // Bogie ID to search
         String searchId = "BG412";
-
-        // Display all bogies
         System.out.println("Available Sorted Bogie IDs:");
         System.out.println(Arrays.toString(sortedBogieIds) + "\n");
 
-        // ---- BINARY SEARCH LOGIC ----
         boolean found = binarySearch(sortedBogieIds, searchId);
 
-        // Display result
         if (found) {
             System.out.println("Bogie " + searchId + " found in train consist.\n");
         } else {
@@ -61,21 +55,17 @@ public class TrainConsistManagementApp {
         int high = arr.length - 1;
 
         while (low <= high) {
-            // Find the middle index safely to avoid integer overflow
             int mid = low + (high - low) / 2;
 
-            // Compare key with mid element
             int comparisonResult = target.compareTo(arr[mid]);
 
             if (comparisonResult == 0) {
-                return true; // Target found at mid
+                return true; 
             } 
             else if (comparisonResult > 0) {
-                // Target is lexicographically greater, ignore left half
                 low = mid + 1;
             } 
             else {
-                // Target is lexicographically smaller, ignore right half
                 high = mid - 1;
             }
         }
