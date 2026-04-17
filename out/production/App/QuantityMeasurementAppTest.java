@@ -20,7 +20,6 @@ public class QuantityMeasurementAppTest {
         System.out.println("\nAll tests execution finished.");
     }
 
-    // --- TEST CASES ---
 
     static void testSort_BasicAlphabeticalSorting() {
         String[] bogies = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
@@ -62,11 +61,7 @@ public class QuantityMeasurementAppTest {
         checkAndPrintResult("testSort_SingleElementArray", expected, bogies);
     }
 
-    // --- HELPER METHOD TO VERIFY RESULTS ---
-
-    /**
-     * Compares the expected string array with the actual sorted string array and prints the result.
-     */
+    
     static void checkAndPrintResult(String testName, String[] expected, String[] actual) {
         if (Arrays.equals(expected, actual)) {
             System.out.println(" PASS: " + testName);
