@@ -17,7 +17,6 @@ public class QuantityMeasurementAppTest {
         System.out.println("\nAll tests execution finished.");
     }
 
-    // --- TEST CASES ---
 
     static void testSearch_ValidArray_ItemFound() {
         String[] bogieIds = {"BG101", "BG205", "BG309"};
@@ -35,17 +34,13 @@ public class QuantityMeasurementAppTest {
         String[] emptyBogies = {};
         
         try {
-            // Attempting to search an empty array
             TrainConsistManagementApp.searchBogieDefensively(emptyBogies, "BG101");
             
-            // If we reach here, the exception was NOT thrown (which is a failure)
-            System.out.println("❌ FAIL: testSearch_EmptyArrayThrowsException (Expected IllegalStateException, but no exception was thrown)");
+            System.out.println(" FAIL: testSearch_EmptyArrayThrowsException (Expected IllegalStateException, but no exception was thrown)");
         } catch (IllegalStateException e) {
-            // The correct exception was thrown
-            System.out.println("✅ PASS: testSearch_EmptyArrayThrowsException (Caught expected IllegalStateException)");
+            System.out.println(" PASS: testSearch_EmptyArrayThrowsException (Caught expected IllegalStateException)");
         } catch (Exception e) {
-            // A different exception was thrown
-            System.out.println("❌ FAIL: testSearch_EmptyArrayThrowsException (Expected IllegalStateException, got " + e.getClass().getSimpleName() + ")");
+            System.out.println(" FAIL: testSearch_EmptyArrayThrowsException (Expected IllegalStateException, got " + e.getClass().getSimpleName() + ")");
         }
     }
 
@@ -53,18 +48,16 @@ public class QuantityMeasurementAppTest {
         String[] nullBogies = null;
         
         try {
-            // Attempting to search a null array
             TrainConsistManagementApp.searchBogieDefensively(nullBogies, "BG101");
             
-            System.out.println("❌ FAIL: testSearch_NullArrayThrowsException (Expected IllegalStateException, but no exception was thrown)");
+            System.out.println(" FAIL: testSearch_NullArrayThrowsException (Expected IllegalStateException, but no exception was thrown)");
         } catch (IllegalStateException e) {
-            System.out.println("✅ PASS: testSearch_NullArrayThrowsException (Caught expected IllegalStateException)");
+            System.out.println(" PASS: testSearch_NullArrayThrowsException (Caught expected IllegalStateException)");
         } catch (Exception e) {
-            System.out.println("❌ FAIL: testSearch_NullArrayThrowsException (Expected IllegalStateException, got " + e.getClass().getSimpleName() + ")");
+            System.out.println(" FAIL: testSearch_NullArrayThrowsException (Expected IllegalStateException, got " + e.getClass().getSimpleName() + ")");
         }
     }
 
-    // --- HELPER METHOD TO VERIFY STANDARD RESULTS ---
 
     static void checkAndPrintResult(String testName, boolean expected, boolean actual) {
         if (expected == actual) {
